@@ -2,11 +2,16 @@ const express = require('express');
 const app = express();
 const httpServer = require('http').createServer(app);
 const { Server } = require("socket.io");
-
-const io = new Server(httpServer,{
-  cors : {
-    origin : ['http://localhost:5173','http://localhost:5174']
-  }
+const PORT = process.env.PORT || 8000
+const io = new Server(httpServer, {
+  cors: {
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "https://yumyumexpress.netlify.app",
+      "https://vendor-yumyumexpress.netlify.app",
+    ],
+  },
 });
 
 app.get('/', (req, res) => {
@@ -40,6 +45,6 @@ io.on('connection', (socket) => {
   })
 });
 
-httpServer.listen(8000, () => {
-  console.log('listening on *:8000');
+httpServer.listen(PORT, () => {
+  console.log('listening on *:'+PORT);
 });
